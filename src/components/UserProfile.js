@@ -10,8 +10,6 @@ function UserProfile() {
       .catch(error => console.error('Error fetching user profile:', error));
   }, []);
 
-  if (!user) return <div>Loading...</div>;
-
   return (
     <div>
       <h1>{user.name}</h1>

@@ -13,7 +13,6 @@ function EventList() {
   return (
     <div>
       <h1>Events</h1>
-      {/* Add sorting and filtering options here */}
       <ul>
         {events.map(event => (
           <li key={event.id}>
