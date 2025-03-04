@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Event } from './EventList';
 
 function EventDetails() {
   const { id } = useParams();
-  const [event, setEvent] = useState(null);
+  const [event, setEvent] = useState<Event | null>(null);
 
   useEffect(() => {
     axios.get(`/api/events/${id}`)
@@ -16,12 +17,12 @@ function EventDetails() {
 
   return (
     <div>
-      <h1>{event.name}</h1>
-      <p>{event.date} - {event.time}</p>
-      <p>{event.location}</p>
-      <p>{event.category}</p>
-      <img src={event.image} alt={event.name} />
-      <p>{event.description}</p>
+      <h1>{event.eventName}</h1>
+      <p>{event.eventDateTime.toString()}</p>
+      <p>{event.eventLocation}</p>
+      <p>{event.eventCategory}</p>
+      <img src={event.eventImage} alt={event.eventName} />
+      <p>{event.eventDescription}</p>
     </div>
   );
 }

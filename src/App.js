@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import EventList from './components/EventList';
-import EventDetails from './components/EventDetails';
-import EventForm from './components/EventForm';
-import UserProfile from './components/UserProfile';
+import EventList from './components/event/EventList';
+import EventDetails from './components/event/EventDetails';
+import EventForm from './components/event/EventForm';
+import UserProfile from './components/user/UserProfile';
 
 function App() {
   return (
