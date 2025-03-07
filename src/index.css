@@ -18,3 +18,78 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* ZA SVA INPUT POLJA */
+.custom-input {
+  display: block;
+  width: 100%;
+  border-radius: 0.375rem; /* rounded-md */
+  background-color: #ffffff; /* bg-white */
+  padding: 0.5rem 0.75rem; /* px-3 py-2 */
+  font-size: 1rem; /* text-base */
+  color: #111827; /* text-gray-900 */
+  border: 1px solid transparent; /* initial border to avoid shifting */
+  outline: 1px solid #d1d5db; /* outline-1 outline-gray-300 */
+  outline-offset: -1px; /* -outline-offset-1 */
+}
+
+.custom-input::placeholder {
+  color: #9ca3af; /* placeholder:text-gray-400 */
+}
+
+.custom-input:focus {
+  outline: 2px solid #4f46e5; /* focus:outline-2 focus:outline-indigo-600 */
+  outline-offset: -2px; /* focus:-outline-offset-2 */
+}
+
+@media (min-width: 640px) {
+  .custom-input {
+    font-size: 0.875rem; /* sm:text-sm */
+    line-height: 1.5rem; /* sm:text-sm/6 (line-height: 1.5rem or 24px) */
+  }
+}
+
+/* ZA SIGN IN I REGISTER */
+.custom-button {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  border-radius: 0.375rem; /* rounded-md */
+  background-color: #4f46e5; /* bg-indigo-600 */
+  padding: 0.5rem 0.75rem; /* px-3 py-2 */
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.5rem; /* text-sm/6 */
+  font-weight: 600; /* font-semibold */
+  color: #ffffff; /* text-white */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-xs */
+  border: none; /* Reset any default button borders */
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-button:hover {
+  background-color: #6366f1; /* hover:bg-indigo-500 */
+}
+
+.custom-button:focus-visible {
+  outline: 2px solid #4f46e5; /* focus-visible:outline-2 focus-visible:outline-indigo-600 */
+  outline-offset: 2px; /* focus-visible:outline-offset-2 */
+}
+
+/* ZA SVAKI LABEL */
+.custom-label {
+  display: block;
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.5rem; /* text-sm/6 */
+  font-weight: 500; /* font-medium */
+  color: #1f2937; /* text-gray-900 */
+}
+
+.custom-bottom-text {
+  font-weight: 600; /* font-semibold */
+  color: #4f46e5; /* text-indigo-600 */
+}
+
+.custom-bottom-text:hover {
+  color: #4338ca; /* hover:text-indigo-500 */
+}

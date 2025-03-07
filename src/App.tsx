@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
-function App() {
+import Footer from './components/Footer';
+import Header from './components/Header';
+import EventDetails from './pages/event/EventDetails';
+import EventForm from './pages/event/EventForm';
+import EventList from './pages/event/EventList';
+import UserLogin from './pages/user/UserLogin';
+import UserProfile from './pages/user/UserProfile';
+import UserRegister from './pages/user/UserRegister';
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className='flex flex-col min-h-screen'>
+      <Header/>
+      <main>
+        <Routes>
+          <Route path="/" element={<EventList />} />
+          <Route path="/event/:id" element={<EventDetails />} />
+          <Route path="/event/create" element={<EventForm />} />
+          <Route path="/event/edit/:id" element={<EventForm />} />
+          <Route path="/user/profile" element={<UserProfile />} />
+          <Route path="/user/login" element={<UserLogin />} />
+          <Route path="/user/register" element={<UserRegister />} />
+        </Routes>
+      </main>
+      <Footer/>
+      </div>
+    </Router>
   );
 }
-
-export default App;
