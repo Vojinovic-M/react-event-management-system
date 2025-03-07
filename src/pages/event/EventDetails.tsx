@@ -17,12 +17,12 @@ function EventDetails() {
 
   return (
     <div>
-      <h1>{event.eventName}</h1>
-      <p>{event.eventDateTime.toString()}</p>
-      <p>{event.eventLocation}</p>
-      <p>{event.eventCategory}</p>
-      <img src={event.eventImage} alt={event.eventName} />
-      <p>{event.eventDescription}</p>
+      <h1>{event.name}</h1>
+      <p>{event.date.toString()}</p>
+      <p>{event.location}</p>
+      <p>{event.category}</p>
+      <img src={event.imageUrl} alt={event.name} />
+      <p>{event.description}</p>
     </div>
   );
 }
