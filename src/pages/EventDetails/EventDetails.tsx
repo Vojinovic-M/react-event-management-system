@@ -6,14 +6,6 @@ import { Event } from '../EventList/EventList';
 export default function EventDetails() {
   const { id } = useParams();
   const [event, setEvent] = useState<Event | null>(null);
-  
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`/api/events/${id}`)
-  //     .then((response) => setEvent(response.data))
-  //     .catch((error) => console.error('Error fetching event details:', error));
-  // }, [id]);
 
     useEffect(() => {
       fetch('https://localhost:7095/api/events/' + id)

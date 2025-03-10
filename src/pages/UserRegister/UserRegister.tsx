@@ -5,8 +5,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function UserRegister() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -14,7 +12,7 @@ export default function UserRegister() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/auth/register', { firstName, lastName, email, password });
+      const response = await axios.post('/auth/register', { email, password });
       localStorage.setItem('user', JSON.stringify(response.data));
       navigate('/user/profile');
     } catch (error) {
@@ -30,39 +28,6 @@ export default function UserRegister() {
 
       <div className="form-wrapper">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* First Name */}
-          <div>
-            <label htmlFor="firstName" className="custom-label">
-              First Name
-            </label>
-            <div className="mt-2">
-              <input
-                name="firstName"
-                type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-                className="custom-input"
-              />
-            </div>
-          </div>
-
-          {/* Last Name */}
-          <div>
-            <label htmlFor="lastName" className="custom-label">
-              Last Name
-            </label>
-            <div className="mt-2">
-              <input
-                name="lastName"
-                type="text"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-                className="custom-input"
-              />
-            </div>
-          </div>
 
           {/* Email */}
           <div>
