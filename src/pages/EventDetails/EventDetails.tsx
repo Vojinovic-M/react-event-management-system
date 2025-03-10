@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Event } from './EventList';
+import { Event } from '../EventList/EventList';
 
 export default function EventDetails() {
   const { id } = useParams();

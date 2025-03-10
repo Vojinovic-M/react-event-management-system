@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import '../../lib/form.css';
+import '../../lib/text.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +14,7 @@ export default function UserRegister() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/auth/register', { firstName, lastName, email, password });
+      const response = await axios.post('/auth/register', { firstName, lastName, email, password });
       localStorage.setItem('user', JSON.stringify(response.data));
       navigate('/user/profile');
     } catch (error) {
@@ -21,14 +23,12 @@ export default function UserRegister() {
   };
 
   return (
-    <div className="flex min-h-full mx-auto w-1/2 bg-white flex-1 flex-col justify-center px-6 py-12 lg:px-8 rounded-lg mb-16">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-700">
-          Create a new account
-        </h2>
+    <div className="wrapper">
+      <div className="header-wrapper">
+        <h2>Create a new account</h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div className="form-wrapper">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* First Name */}
           <div>
@@ -110,7 +110,7 @@ export default function UserRegister() {
           </div>
         </form>
 
-        <p className="mt-10 text-center text-sm/6 text-gray-500">
+        <p className="grey-bottom-text">
           Already have an account?{' '}
           <a href="/user/login" className="custom-bottom-text">
             Login here

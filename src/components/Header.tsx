@@ -1,6 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { User } from "../pages/user/UserProfile";
+import { User } from "../pages/UserProfile/UserProfile";
 import { Link } from "react-router-dom";
 
 export default function Header() {

@@ -1,0 +1,16 @@
+.grey-bottom-text {
+    margin-top: 2.5rem; /* mt-10 */
+    text-align: center; /* text-center */
+    font-size: 0.875rem; /* text-sm */
+    line-height: 1.5rem; /* Equivalent to text-sm/6 */
+    color: #6b7280; /* text-gray-500 */
+}
+
+.custom-bottom-text {
+    font-weight: 600; /* font-semibold */
+    color: #4f46e5; /* text-indigo-600 */
+  }
+  
+  .custom-bottom-text:hover {
+    color: #4338ca; /* hover:text-indigo-500 */
+  }

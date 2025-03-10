@@ -4,12 +4,12 @@ import './App.css';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
-import EventDetails from './pages/event/EventDetails';
-import EventForm from './pages/event/EventForm';
-import EventList from './pages/event/EventList';
-import UserLogin from './pages/user/UserLogin';
-import UserProfile from './pages/user/UserProfile';
-import UserRegister from './pages/user/UserRegister';
+import EventDetails from './pages/EventDetails/EventDetails';
+import EventForm from './pages/EventForm/EventForm';
+import EventList from './pages/EventList/EventList';
+import UserLogin from './pages/UserLogin/UserLogin';
+import UserProfile from './pages/UserProfile/UserProfile';
+import UserRegister from './pages/UserRegister/UserRegister';
 
 export default function App() {
   return (

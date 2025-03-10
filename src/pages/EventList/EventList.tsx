@@ -37,7 +37,7 @@ export default function EventList() {
               <h2 className="text-2xl font-bold text-gray-800 mb-2">{event.name}</h2>
               <p className=" text-gray-600 mb-2">{event.date.toLocaleString()}</p>
               <p className=" text-gray-600 mb-4">{event.location}</p>
-              <p className=" text-gray-700 mb-4">{event.category}</p>
+              <p className=" text-gray-600 mb-4">{event.category}</p>
               <p className=" text-gray-600 mb-4">{event.description}</p>
               <a
                 href={`/event/${event.eventId}`}
