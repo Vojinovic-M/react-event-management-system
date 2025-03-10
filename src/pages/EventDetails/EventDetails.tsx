@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Event } from '../EventList/EventList';
 
@@ -18,7 +17,7 @@ export default function EventDetails() {
           setEvent(eventWithValidDate);
         })
         .catch(error => console.error('Error fetching event:', error));
-    }, []);
+    }, [id]);
 
 
   if (!event)
@@ -45,12 +44,8 @@ export default function EventDetails() {
               <span>Date:</span>{' '}
               {new Date(event.date).toLocaleDateString()}
             </p>
-            <p>
-              <span>Location:</span> {event.location}
-            </p>
-            <p>
-              <span>Category:</span> {event.category}
-            </p>
+            <p><span>Location:</span> {event.location}</p>
+            <p><span>Category:</span> {event.category}</p>
           </div>
           <p className="text-gray-700 leading-relaxed">{event.description}</p>
         </div>

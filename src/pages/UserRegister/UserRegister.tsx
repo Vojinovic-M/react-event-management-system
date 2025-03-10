@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
 import '../../lib/form.css';
 import '../../lib/text.css';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { register } from '../../services/AuthService';
 
 export default function UserRegister() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
+
     try {
-      const response = await axios.post('/auth/register', { email, password });
-      localStorage.setItem('user', JSON.stringify(response.data));
-      navigate('/user/profile');
-    } catch (error) {
-      console.error('Error registering:', error);
+      const result = await register(formData);
+      if (result.message) {
+        setSuccess("Registration successful. You can now login.");
+      } else {
+        setError('Invalid email or password');
+      }
+    } catch {
+      setError('Something went wrong. Please try again.');
     }
+
   };
 
   return (
@@ -27,6 +43,8 @@ export default function UserRegister() {
       </div>
 
       <div className="form-wrapper">
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {success && <p style={{ color: "green" }}>{success}</p>}
         <form onSubmit={handleSubmit} className="space-y-6">
 
           {/* Email */}
@@ -38,10 +56,9 @@ export default function UserRegister() {
               <input
                 name="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleChange}
                 required
-                autoComplete="email"
                 className="custom-input"
               />
             </div>
@@ -56,20 +73,16 @@ export default function UserRegister() {
               <input
                 name="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={handleChange}
                 required
-                autoComplete="new-password"
                 className="custom-input"
               />
             </div>
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="custom-button"
-            >
+            <button type="submit" className="custom-button">
               Register
             </button>
           </div>
