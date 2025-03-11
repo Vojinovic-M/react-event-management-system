@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import EventInterface  from '../../models/Event';
 
-export interface Event {
-  eventId: number;
-  name: string;
-  date: Date;
-  location: string;
-  category: string;
-  description: string;
-  imageUrl: string;
-}
 
 export default function EventList() {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventInterface[]>([]);
 
   useEffect(() => {
     fetch('https://localhost:7095/api/events')
@@ -32,7 +24,7 @@ export default function EventList() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {events.map(event => (
           <div key={event.eventId} className="max-w-full bg-white rounded-lg shadow-md overflow-hidden">
-            <img src={event.imageUrl} alt={event.name} className="w-full h-64 object-cover" />
+            <img src={event.image} alt={event.name} className="w-full h-64 object-cover" />
             <div className="p-6 text-sm">
               <h2 className="text-2xl font-bold text-gray-800 mb-2">{event.name}</h2>
               <p className=" text-gray-600 mb-2">{event.date.toLocaleString()}</p>

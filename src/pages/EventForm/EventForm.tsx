@@ -1,11 +1,13 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { fetchEvent } from '../../services/EventService';
+import EventInterface from '../../models/Event';
 
-function EventForm() {
+export default function EventForm() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [event, setEvent] = useState({
+  const [event, setEvent] = useState<EventInterface>({
+    eventId: 0,
     name: '',
     date: '',
     time: '',
@@ -14,12 +16,10 @@ function EventForm() {
     description: '',
     image: ''
   });
-
+    
   useEffect(() => {
     if (id) {
-      axios.get(`/api/events/${id}`)
-        .then(response => setEvent(response.data))
-        .catch(error => console.error('Error fetching event:', error));
+      fetchEvent(parseInt(id)).then(fetchedEvent => setEvent(fetchedEvent));
     }
   }, [id]);
 
@@ -28,18 +28,27 @@ function EventForm() {
     setEvent(prevEvent => ({ ...prevEvent, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (id) {
-      axios.put(`/api/events/${id}`, event)
-        .then(() => navigate(`/event/${id}`))
-        .catch(error => console.error('Error updating event:', error));
+    const url = id ? `https://localhost:7095/api/events/${id}` : 'https://localhost:7095/api/events';
+    const method = id ? 'PUT' : 'POST';
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(event)
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      navigate(`/events/${result.eventId}`);
     } else {
-      axios.post('/api/events', event)
-        .then(response => navigate(`/event/${response.data.id}`))
-        .catch(error => console.error('Error creating event:', error));
+      console.error('Failed to submit form');
     }
-  };
+  }
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -50,10 +59,8 @@ function EventForm() {
       <input type="text" name="location" value={event.location} onChange={handleChange} placeholder="Location" required />
       <input type="text" name="category" value={event.category} onChange={handleChange} placeholder="Category" required />
       <textarea name="description" value={event.description} onChange={handleChange} placeholder="Description" required />
-      <input type="text" name="image" value={event.image} onChange={handleChange} placeholder="Image URL" required />
+      <input type="text" name="image" value={event.image} onChange={handleChange} placeholder="Image" required />
       <button type="submit">{id ? 'Update' : 'Create'}</button>
     </form>
   );
 }
-
-export default EventForm;

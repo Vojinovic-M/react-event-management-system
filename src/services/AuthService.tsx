@@ -30,11 +30,12 @@ export const login = async (credentials: any) => {
 
 export const logout = async () => {
     try {
-        const response = await fetch(`${API_URL}/logout`, {
+        await fetch(`${API_URL}/logout`, {
         method: 'POST',
         credentials: 'include'
         });
         localStorage.removeItem('user');
+        window.location.href='login';
 
     } catch (error) {
         console.error('Error logging out:', error);

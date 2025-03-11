@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Event } from '../EventList/EventList';
+import Event from '../../models/Event';
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -31,7 +31,7 @@ export default function EventDetails() {
     <div className="flex h-full items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl w-full bg-white rounded-lg shadow-md">
         <img
-          src={event.imageUrl}
+          src={event.image}
           alt={event.name}
           className="w-full h-64 object-cover"
         />
