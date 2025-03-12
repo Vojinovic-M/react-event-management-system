@@ -1,3 +1,5 @@
+import User from "../models/User";
+
 const API_URL = "https://localhost:7095";
 
 export const register = async (userData: any) => {
@@ -40,4 +42,29 @@ export const logout = async () => {
     } catch (error) {
         console.error('Error logging out:', error);
     }
+}
+export async function getUserProfile(): Promise<User | null> {
+    const tokenData = localStorage.getItem('user');
+    if (!tokenData) return null;
+    
+    try {
+        const { accessToken } = JSON.parse(tokenData!);
+        const response = await fetch(`${API_URL}/api/user/profile/`, {
+            method: 'GET',
+            credentials: 'include', // za cookies
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`Failed to fetch user profile: ${response.status}`);
+        }
+        return response.json();
+    
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        return null;
+    }
+
 }

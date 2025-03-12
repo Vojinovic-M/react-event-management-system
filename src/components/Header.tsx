@@ -10,23 +10,28 @@ export default function Header() {
     useEffect(() => {
         const tokenData = localStorage.getItem('user');
         if (tokenData) {
-            const { accessToken } = JSON.parse(tokenData!);
-            fetch('https://localhost:7095/api/user/profile/', {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error(`Failed to fetch user profile: ${response.status}`);
-            })
-            .then((data: any) => {  setUser(data);  }  )
-            .catch(error => console.error('Error fetching user profile:', error));
+            try {
+                const { accessToken } = JSON.parse(tokenData!);
+                fetch('https://localhost:7095/api/user/profile/', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error(`Failed to fetch user profile: ${response.status}`);
+                })
+                .then((data: any) => {  setUser(data);  }  )
+                .catch(error => console.error('Error fetching user profile:', error));
+            } catch(error) {
+                console.error("Error parsing user data from localStorage: ", error);
+            }
+            
         }
     }, []);
 

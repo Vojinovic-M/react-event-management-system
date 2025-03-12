@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Event from '../../models/Event';
+import '../../lib/eventdetailsimage.css';
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -28,26 +29,34 @@ export default function EventDetails() {
     );
 
   return (
-    <div className="flex h-full items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl w-full bg-white rounded-lg shadow-md">
-        <img
-          src={event.image}
-          alt={event.name}
-          className="w-full h-64 object-cover"
-        />
-        <div className="p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            {event.name}
-          </h1>
-          <div className="text-gray-600 mb-4 font-medium">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-6 py-12">
+      <div className="max-w-3xl w-full bg-white rounded-xl shadow-lg overflow-hidden">
+        {/* Image Container */}
+        <div className="flex justify-center p-6">
+          <div className='border'>
+              <img
+                src={event.image}
+                alt={event.name}
+              />
+            </div>
+        </div>
+
+        {/* Event Details */}
+        <div className="px-8 pb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">{event.name}</h1>
+          <div className="text-gray-600 space-y-2 font-medium">
             <p>
-              <span>Date:</span>{' '}
+              <span className="font-semibold">Date:</span>{" "}
               {new Date(event.date).toLocaleDateString()}
             </p>
-            <p><span>Location:</span> {event.location}</p>
-            <p><span>Category:</span> {event.category}</p>
+            <p>
+              <span className="font-semibold">Location:</span> {event.location}
+            </p>
+            <p>
+              <span className="font-semibold">Category:</span> {event.category}
+            </p>
           </div>
-          <p className="text-gray-700 leading-relaxed">{event.description}</p>
+          <p className="text-gray-700 leading-relaxed mt-4">{event.description}</p>
         </div>
       </div>
     </div>
