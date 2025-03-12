@@ -29,7 +29,7 @@ export default function EventDetails() {
     );
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-6 py-12">
+    <div className="flex min-h-screen items-center justify-center px-6 py-12">
       <div className="max-w-3xl w-full bg-white rounded-xl shadow-lg overflow-hidden">
         {/* Image Container */}
         <div className="flex justify-center p-6">

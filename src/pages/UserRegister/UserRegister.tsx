@@ -1,30 +1,28 @@
 import React, { useState } from 'react';
 import '../../lib/form.css';
 import '../../lib/text.css';
-import { useNavigate } from 'react-router-dom';
 import { register } from '../../services/AuthService';
 
 export default function UserRegister() {
-  const [formData, setFormData] = useState({
+  const [userData, setUserData] = useState({
     email: '',
     password: '',
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate();
 
   const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setUserData({ ...userData, [e.target.name]: e.target.value });
   }
 
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setSuccess('');
 
     try {
-      const result = await register(formData);
+      const result = await register(userData);
       if (result.message) {
         setSuccess("Registration successful. You can now login.");
       } else {
@@ -56,7 +54,7 @@ export default function UserRegister() {
               <input
                 name="email"
                 type="email"
-                value={formData.email}
+                value={userData.email}
                 onChange={handleChange}
                 required
                 className="custom-input"
@@ -73,7 +71,7 @@ export default function UserRegister() {
               <input
                 name="password"
                 type="password"
-                value={formData.password}
+                value={userData.password}
                 onChange={handleChange}
                 required
                 className="custom-input"

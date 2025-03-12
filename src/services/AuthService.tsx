@@ -2,19 +2,34 @@ import User from "../models/User";
 
 const API_URL = "https://localhost:7095";
 
-export const register = async (userData: any) => {
+export const register = async (userData: {email: string; password: string}) => {
+    console.log("Registering user:", userData);
+
     try {
         const response = await fetch(`${API_URL}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
-        });
-        return response.json();
+        })
+        console.log("Response status:", response.status);
+        
+        let responseData = null;
+        try {
+            responseData = await response.json();
+            console.log("Response data:", responseData);
+        } catch {
+            console.warn("No JSON in response. Probably works.")
+        }
+        
+        if (!response.ok) throw new Error("Registration failed!")
+
+        return responseData ?? {message: "Success"};
 
     } catch (error) {
         console.error('Error registering:', error);
     }
 }
+
 
 export const login = async (credentials: any) => {
     try {

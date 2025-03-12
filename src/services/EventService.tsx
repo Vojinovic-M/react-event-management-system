@@ -7,14 +7,12 @@ export const fetchEvent = async (eventId: number) => {
     // konvertovanje u stringove
     Event = {
         ...data,
-        date: data.date,
-        time: data.time.substring(0, 5) // da bude HH:mm
+        date: data.date
     }
     return {
         eventId: data.eventId,
         name: data.name,
         date: data.date,
-        time: data.time,
         location: data.location,
         category: data.category,
         description: data.description,

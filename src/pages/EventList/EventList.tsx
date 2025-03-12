@@ -25,18 +25,19 @@ export default function EventList() {
         {events.map(event => (
           <div key={event.eventId} className="max-w-full bg-white rounded-lg shadow-md overflow-hidden">
             <img src={event.image} alt={event.name} className="w-full h-64 object-cover" />
-            <div className="p-6 text-sm">
+            <div className="p-6 text-sm relative h-max">
               <h2 className="text-2xl font-bold text-gray-800 mb-2">{event.name}</h2>
               <p className=" text-gray-600 mb-2">{event.date.toLocaleString()}</p>
               <p className=" text-gray-600 mb-4">{event.location}</p>
               <p className=" text-gray-600 mb-4">{event.category}</p>
               <p className=" text-gray-600 mb-4">{event.description}</p>
-              <a
+              <div className='text-center bottom-0'><a
                 href={`/event/${event.eventId}`}
-                className="inline-block px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-md hover:bg-indigo-500 transition"
+                className="w-full px-4 py-2 bg-indigo-600 text-white text-md font-semibold rounded-md hover:bg-indigo-500 transition"
               >
                 Visit Event
-              </a>
+              </a></div>
+              
             </div>
           </div>
         ))}
