@@ -32,6 +32,8 @@ export default function Header() {
                 console.error("Error parsing user data from localStorage: ", error);
             }
             
+        } else {
+            console.log("User is not logged in");
         }
     }, []);
 
@@ -42,7 +44,8 @@ export default function Header() {
 
     return <div>
         <ul className="flex w-full justify-center bg-blue-700 p-4 mb-16">
-            {user ? (
+            {user ? ( user.roles?.includes("Admin") ? 
+            (
                 <>
                 <li className="mr-6"><Link className="text-gray-100 hover:text-blue-100" to="/">Events List</Link></li>
                 <li className="mr-6"><Link to="/user/profile" className="text-gray-100 hover:text-blue-100">User Profile</Link></li>
@@ -53,10 +56,20 @@ export default function Header() {
             ) : (
                 <>
                     <li className="mr-6"><Link className="text-gray-100 hover:text-blue-100" to="/">Events List</Link></li>
+                    <li className="mr-6"><Link to="/user/profile" className="text-gray-100 hover:text-blue-100">User Profile</Link></li>
+                    <li className="mr-6"><button onClick={handleLogout} className="text-gray-100 hover:text-blue-100">Logout</button></li> 
+                    <li className="mr-6"><p className="text-gray-100 hover:text-blue-100 mr-8">Hi, {user.email}</p></li>
+                </>
+                )
+                
+            ) : (
+                <>
+                    <li className="mr-6"><Link className="text-gray-100 hover:text-blue-100" to="/">Events List</Link></li>
                     <li className="mr-6"><Link className="text-gray-100 hover:text-blue-100" to="/user/login">Login</Link></li>
                     <li className="mr-6"><Link className="text-gray-100 hover:text-blue-100" to="/user/register">Register</Link></li>
                 </>
-                )}
+                )
+            }
         </ul>
     </div>
 }

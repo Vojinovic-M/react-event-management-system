@@ -21,8 +21,8 @@ export const fetchEvent = async (eventId: number) => {
 }
 
 export async function handleSubmit(eventData: EventInterface, id?: string, navigate?: (path:string) => void): Promise<EventInterface | null> {
-    const url = id ? `https://localhost:7095/api/events/${id}` : 'https://localhost:7095/api/admin/create';
-    const method = id ? 'PUT' : 'POST';
+    const url = 'https://localhost:7095/api/admin/create';
+    const method = 'POST';
 
     try {
         const response = await fetch(url, {
@@ -30,6 +30,7 @@ export async function handleSubmit(eventData: EventInterface, id?: string, navig
             headers: {
               'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify(eventData)
           });
 
@@ -49,7 +50,4 @@ export async function handleSubmit(eventData: EventInterface, id?: string, navig
         console.error(error);
         return null;
     }
-    
-
-
 }

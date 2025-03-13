@@ -52,7 +52,7 @@ export const logout = async () => {
         credentials: 'include'
         });
         localStorage.removeItem('user');
-        window.location.href='login';
+        window.location.href='/user/login';
 
     } catch (error) {
         console.error('Error logging out:', error);
@@ -75,7 +75,12 @@ export async function getUserProfile(): Promise<User | null> {
         if (!response.ok) {
             throw new Error(`Failed to fetch user profile: ${response.status}`);
         }
-        return response.json();
+
+        const userData: { email: string; roles?: string[]} = await response.json();
+        return {
+            email: userData.email,
+            roles: userData.roles || []
+        }
     
     } catch (error) {
         console.error('Error fetching user profile:', error);
