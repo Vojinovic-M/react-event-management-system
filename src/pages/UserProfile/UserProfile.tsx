@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { getUserProfile, logout } from '../../services/AuthService';
+import { AuthService } from '../../services/AuthService';
 import User from '../../models/User';
+
 
 export default function UserProfile() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    getUserProfile().then(setUser);
+    const tokenData = localStorage.getItem('user')
+    if (tokenData) {
+      const { accessToken } = JSON.parse(tokenData)
+      AuthService.getProfile(accessToken)
+      .then(setUser)
+      .catch(console.error)
+    }
   }, []);
 
-  const handleLogout = async () => {
-    await logout();
-    setUser(null);
+  const handleLogout = () => {
+    AuthService.logout()
+    .then(() => {
+      localStorage.removeItem('user')
+      setUser(null)
+    })
+    .catch(console.error)
   }
 
   if (!user) {

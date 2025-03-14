@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 import '../../lib/form.css';
 import '../../lib/text.css';
-import { login } from '../../services/AuthService';
+import { AuthService } from '../../services/AuthService';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function UserLogin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-  
-    try {
-      const user = await login({ email, password });
-      localStorage.setItem('user', JSON.stringify(user));
-      console.log('user', user);
-      window.location.href = '/user/profile';
-    } catch (error) {
-      setError('Invalid email or password');
-    }
-  
+    setError('')
+
+    AuthService.login({ email, password} )
+      .then((response) => {
+        localStorage.setItem('user', JSON.stringify( {accessToken: response.accessToken}));
+        navigate('/user/profile')
+      })
+      .catch(error => {
+        console.error('Login failed:', error);
+        alert(`Login error: ${error}`);
+        });
   };
 
   return (
@@ -72,9 +74,9 @@ export default function UserLogin() {
 
           <p className="grey-bottom-text">
             Don't have an account?{' '}
-            <a href="/user/register" className="custom-bottom-text">
+            <Link to="/user/register" className="custom-bottom-text">
               Register here
-            </a>
+            </Link>
           </p>
         </div>
     </div>

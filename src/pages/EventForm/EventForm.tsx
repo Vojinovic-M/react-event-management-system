@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchEvent, handleSubmit } from '../../services/EventService';
+import { EventService } from '../../services/EventService';
 import EventInterface from '../../models/Event';
 import '../../lib/eventform.css';
 
@@ -19,15 +19,20 @@ export default function EventForm() {
     
   useEffect(() => {
     if (id) {
-      fetchEvent(parseInt(id)).then(fetchedEvent => setEvent(fetchedEvent));
+      EventService.getEvent(parseInt(id))
+      .then(fetchedEvent => setEvent(fetchedEvent))
+      .catch(console.error);
     }
   }, [id]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await handleSubmit(event, id, navigate);
-    if (result) {
-      console.log('Event submitted successfully: ', result);
+    try {
+      const result = await EventService.createNewEvent(event)
+      console.log('Event submitted successfully: ', result)
+      navigate(`/event/${result.eventId}`)
+    } catch (error) {
+      console.log('Submission error: ', error)
     }
   }
 

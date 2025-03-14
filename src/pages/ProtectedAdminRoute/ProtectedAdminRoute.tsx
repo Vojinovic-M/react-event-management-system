@@ -1,7 +1,6 @@
 import { JSX, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { getUserProfile } from "../../services/AuthService";
-import User from "../../models/User";
+import { AuthService } from "../../services/AuthService";
 
 export default function ProtectedAdminRoute({ children }: {children: JSX.Element}) {
     const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
@@ -10,8 +9,14 @@ export default function ProtectedAdminRoute({ children }: {children: JSX.Element
     useEffect(() => {
         const checkAdminStatus = async () => {
             try {
-                const user: User | null = await getUserProfile();
-                setIsAdmin(user?.roles?.includes('Admin') ?? false);
+                const tokenData = localStorage.getItem('user')
+                if (!tokenData) {
+                    setIsAdmin(false)
+                    return
+                }
+                const { accessToken } = JSON.parse(tokenData)
+                const user = await AuthService.getProfile(accessToken)
+                setIsAdmin(user?.roles?.includes('Admin') ?? false)
             } catch (error) {
                 setIsAdmin(false);
             }

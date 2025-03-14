@@ -1,53 +1,30 @@
 import EventInterface from "../models/Event";
+import { handleResponse } from "./HandleResponse";
 
-export const fetchEvent = async (eventId: number) => {
-    const response = await fetch(`https://localhost:7095/api/events/${eventId}`);
-    const data = await response.json();
+const API_URL = "https://localhost:7095";
 
-    // konvertovanje u stringove
-    Event = {
-        ...data,
-        date: data.date
-    }
-    return {
-        eventId: data.eventId,
-        name: data.name,
-        date: data.date,
-        location: data.location,
-        category: data.category,
-        description: data.description,
-        image: data.imageUrl
-    };
+export const EventService = {
+  getEvent: (eventId: number) =>
+    fetch(`${API_URL}/api/events/${eventId}`)
+    .then(handleResponse)
+    .then(data => ({
+      eventId: data.eventId,
+      name: data.name,
+      date: data.date,
+      location: data.location,
+      category: data.category,
+      description: data.description,
+      image: data.imageUrl
+    } as EventInterface)),
+
+
+  createNewEvent: (eventData: EventInterface) =>
+    fetch(`${API_URL}/api/admin/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(eventData)
+    })
+    .then(handleResponse)
 }
-
-export async function handleSubmit(eventData: EventInterface, id?: string, navigate?: (path:string) => void): Promise<EventInterface | null> {
-    const url = 'https://localhost:7095/api/admin/create';
-    const method = 'POST';
-
-    try {
-        const response = await fetch(url, {
-            method,
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify(eventData)
-          });
-
-          if (!response.ok) {
-            throw new Error('Failed to submit form');
-          }
-
-          const result: EventInterface = await response.json();
-
-          if (navigate) {
-            navigate(`/event/${result.eventId}`)
-          }
-
-          return result;
-    
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-}
+ 

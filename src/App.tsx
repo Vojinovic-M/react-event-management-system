@@ -21,10 +21,10 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<EventList />} />
-          <Route path="/event/:id" element={<EventDetails />} />
-          <Route path="/user/profile" element={<UserProfile />} />
-          <Route path="/user/login" element={<UserLogin />} />
-          <Route path="/user/register" element={<UserRegister />} />
+          <Route path="/event/:id" element={< EventDetails />} />
+          <Route path="/user/profile" element={< UserProfile />} />
+          <Route path="/user/login" element={< UserLogin />} />
+          <Route path="/user/register" element={< UserRegister />} />
           <Route path="/event/create" element={
             <ProtectedAdminRoute>
               <EventForm />
