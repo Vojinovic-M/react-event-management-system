@@ -1,6 +1,6 @@
 import { JSX, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { AuthService } from "../../services/AuthService";
+import { AuthService } from "../services/AuthService";
 
 export default function ProtectedAdminRoute({ children }: {children: JSX.Element}) {
     const [isAdmin, setIsAdmin] = useState<boolean | null>(null);

@@ -4,8 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
-import { store, persistor } from './redux/store/store';
+import { store, persistor } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import LoadingSpinner from './components/LoadingSpinner';
+import AuthProvider from './components/AuthProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,8 +15,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
+      <PersistGate loading={<LoadingSpinner/>} persistor={persistor}>
+        <AuthProvider>
+            <App />
+        </AuthProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>

@@ -1,5 +1,6 @@
-import User from "../../../models/User";
+import User from "../../models/User";
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { loginUser, logoutUser } from "../thunks/authThunks";
 
 interface AuthState {
     user: User | null;
@@ -33,6 +34,25 @@ const authSlice = createSlice({
         logout: (state) => {
             state.user = null;
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(loginUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(loginUser.fulfilled, (state, action: PayloadAction<User>) => {
+                state.user = action.payload;
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(loginUser.rejected, (state, action: PayloadAction<any>) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(logoutUser.fulfilled, (state) => {
+                state.user = null
+            })
     }
 })
 

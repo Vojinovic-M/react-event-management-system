@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -10,7 +9,7 @@ import EventList from './pages/EventList/EventList';
 import UserLogin from './pages/UserLogin/UserLogin';
 import UserProfile from './pages/UserProfile/UserProfile';
 import UserRegister from './pages/UserRegister/UserRegister';
-import ProtectedAdminRoute from './pages/ProtectedAdminRoute/ProtectedAdminRoute';
+import ProtectedAdminRoute from './components/ProtectedAdminRoute';
 import Unauthorized from './pages/Unauthorized/Unauthorized';
 
 export default function App() {

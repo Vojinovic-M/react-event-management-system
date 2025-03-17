@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import '../../lib/form.css';
 import '../../lib/text.css';
-import { AuthService } from '../../services/AuthService';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../store/hooks';
+import { loginUser } from '../../store/thunks/authThunks';
 
 export default function UserLogin() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -14,15 +16,13 @@ export default function UserLogin() {
     e.preventDefault();
     setError('')
 
-    AuthService.login({ email, password} )
-      .then((response) => {
-        localStorage.setItem('user', JSON.stringify( {accessToken: response.accessToken}));
-        navigate('/user/profile')
+    dispatch(loginUser({ email, password}))
+      .unwrap()
+      .then(() => navigate('/user/profile'))
+      .catch((error) => {
+        console.error('Login failed: ', error)
+        setError(error.message || 'Login failed, please try again.')
       })
-      .catch(error => {
-        console.error('Login failed:', error);
-        alert(`Login error: ${error}`);
-        });
   };
 
   return (
@@ -30,7 +30,7 @@ export default function UserLogin() {
         <div className="header-wrapper">
           <h2>Sign in to your account</h2>
         </div>
-        {error && <p style={{color: "red"}}>{error}</p>}
+        {error && <span style={{color: "red"}}>{error}</span>}
 
         <div className="form-wrapper">
           <form action="#" method="POST" className="space-y-6" onSubmit={handleSubmit}>
@@ -72,12 +72,12 @@ export default function UserLogin() {
             </div>
           </form>
 
-          <p className="grey-bottom-text">
+          <span className="grey-bottom-text">
             Don't have an account?{' '}
             <Link to="/user/register" className="custom-bottom-text">
               Register here
             </Link>
-          </p>
+          </span>
         </div>
     </div>
   )
