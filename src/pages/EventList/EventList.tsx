@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import EventInterface  from '../../models/Event';
+import { useEffect } from 'react';
+import { fetchEvents } from '../../store/thunks/eventThunks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import EventInterface from '../../models/Event';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 
 export default function EventList() {
-  const [events, setEvents] = useState<EventInterface[]>([]);
+  const dispatch = useAppDispatch()
+  const { events, loading, error } = useAppSelector((state) => state.event)
+  const { globalLoading } = useAppSelector((state) => state.app)
 
   useEffect(() => {
-    fetch('https://localhost:7095/api/events')
-      .then(response => response.json())
-      .then(data => {
-        const eventsWithValidDates = data.map((event: any) => ({
-          ...event,
-          date: new Date(event.date),  // datum u ispravan format za JS Date objekat
-        }));
-        setEvents(eventsWithValidDates);
-      })
-      .catch(error => console.error('Error fetching events:', error));
-  }, []);
+    dispatch(fetchEvents())
+  }, [dispatch])
+  
+  if (loading) return <LoadingSpinner/>
+  if (error) return <div>Error: {error}</div>
 
   return (
     <div className="max-w-screen-xl mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8 text-center">Upcoming Events</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {events.map(event => (
+        {events.map((event: EventInterface) => (
           <div key={event.eventId} className="max-w-full bg-white rounded-lg shadow-md overflow-hidden">
             <img src={event.image} alt={event.name} className="w-full h-64 object-cover" />
             <div className="p-6 text-sm relative h-max">

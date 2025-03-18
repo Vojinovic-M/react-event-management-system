@@ -1,21 +1,22 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logoutUser } from '../../store/thunks/authThunks';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 
 export default function UserProfile() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { user } = useAppSelector((state) => state.auth)
+  const { globalLoading } = useAppSelector((state) => state.app)
   
   const handleLogout = () => {
       dispatch(logoutUser());
       navigate('/user/login')
     };
 
-  if (!user) {
-    return <div>You are not logged in.</div>;
-  }
+  if (globalLoading) return <LoadingSpinner/>
+  if (!user) return <div>You are not logged in.</div>;
 
   return (
     <div className="max-w-lg mx-auto bg-white shadow-md rounded-xl p-6 text-center">

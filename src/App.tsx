@@ -29,6 +29,16 @@ export default function App() {
               <EventForm />
             </ProtectedAdminRoute>
             } />
+            <Route path="/event/modify" element={
+            <ProtectedAdminRoute>
+              <EventForm />
+            </ProtectedAdminRoute>
+            } />
+            <Route path="/event/delete" element={
+            <ProtectedAdminRoute>
+              <EventForm />
+            </ProtectedAdminRoute>
+            } />
           <Route path="/event/edit/:id" element={
             <ProtectedAdminRoute>
               <EventForm />

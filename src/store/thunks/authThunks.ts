@@ -2,6 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthService } from '../../services/AuthService';
 import { logout } from '../slices/authSlice';
 
+const API_URL = "https://localhost:7095/api"
+
+
 export const loginUser = createAsyncThunk(
   'auth/login',
   async (credentials: { email: string; password: string }, { rejectWithValue }) => {

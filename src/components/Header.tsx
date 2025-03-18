@@ -9,15 +9,12 @@ import { useNavigate } from 'react-router-dom';
 export default function Header() {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const { user, loading} = useAppSelector((state) => state.auth)
+    const { user} = useAppSelector((state) => state.auth)
 
     const handleLogout = () => {
         dispatch(logoutUser())
         navigate('/user/login')
     };
-
-    if (loading) return <div className="loading-indicator">Loading...</div>
-
 
     return (
         <header>
