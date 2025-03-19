@@ -8,7 +8,6 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 export default function EventList() {
   const dispatch = useAppDispatch()
   const { events, loading, error } = useAppSelector((state) => state.event)
-  const { globalLoading } = useAppSelector((state) => state.app)
 
   useEffect(() => {
     dispatch(fetchEvents())

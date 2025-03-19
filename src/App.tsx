@@ -24,26 +24,11 @@ export default function App() {
           <Route path="/user/profile" element={< UserProfile />} />
           <Route path="/user/login" element={< UserLogin />} />
           <Route path="/user/register" element={< UserRegister />} />
-          <Route path="/event/create" element={
-            <ProtectedAdminRoute>
-              <EventForm />
-            </ProtectedAdminRoute>
-            } />
-            <Route path="/event/modify" element={
-            <ProtectedAdminRoute>
-              <EventForm />
-            </ProtectedAdminRoute>
-            } />
-            <Route path="/event/delete" element={
-            <ProtectedAdminRoute>
-              <EventForm />
-            </ProtectedAdminRoute>
-            } />
-          <Route path="/event/edit/:id" element={
-            <ProtectedAdminRoute>
-              <EventForm />
-            </ProtectedAdminRoute>
-          } />
+          <Route element={<ProtectedAdminRoute/>}>
+            <Route path="/event/create" element={<EventForm/>} />
+            <Route path="/event/delete" element={<EventForm/>} />
+            <Route path="/event/edit/:id" element={<EventForm/>} />
+          </Route>
           <Route path="/unauthorized" element={<Unauthorized/>}></Route>
         </Routes>
       </main>

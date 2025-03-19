@@ -2,8 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthService } from '../../services/AuthService';
 import { logout } from '../slices/authSlice';
 
-const API_URL = "https://localhost:7095/api"
-
 
 export const loginUser = createAsyncThunk(
   'auth/login',
@@ -12,7 +10,7 @@ export const loginUser = createAsyncThunk(
       const { accessToken } = await AuthService.login(credentials);
       const user = await AuthService.getProfile(accessToken);
       localStorage.setItem('accessToken', accessToken);
-      return user;
+      return { user, token: accessToken};
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message);

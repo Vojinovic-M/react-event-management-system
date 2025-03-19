@@ -4,12 +4,14 @@ import { loginUser, logoutUser } from "../thunks/authThunks";
 
 interface AuthState {
     user: User | null;
+    token: string | null;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: AuthState = {
     user: null,
+    token: null,
     loading: false,
     error: null
 }
@@ -22,8 +24,9 @@ const authSlice = createSlice({
             state.loading = true;
             state.error = null;
         },
-        loginSuccess: (state, action: PayloadAction<User>) => {
-            state.user = action.payload;
+        loginSuccess: (state, action: PayloadAction<{user: User; token: string}>) => {
+            state.user = action.payload.user;
+            state.token = action.payload.token;
             state.loading = false;
             state.error = null;
         },
@@ -41,8 +44,9 @@ const authSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(loginUser.fulfilled, (state, action: PayloadAction<User>) => {
-                state.user = action.payload;
+            .addCase(loginUser.fulfilled, (state, action: PayloadAction<{user: User; token: string}>) => {
+                state.user = action.payload.user;
+                state.token = action.payload.token;
                 state.loading = false;
                 state.error = null;
             })

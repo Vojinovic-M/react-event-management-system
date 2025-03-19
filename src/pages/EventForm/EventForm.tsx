@@ -10,9 +10,8 @@ export default function EventForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { event, error} = useAppSelector((state) => state.event)
-  const { globalLoading } = useAppSelector((state) => state.app)
-  const [formEvent, setFormEvent] = useState<EventInterface>({
+  const { loading, error} = useAppSelector((state) => state.event)
+  const [event, setEvent] = useState<EventInterface>({
     eventId: 0,
     name: '',
     date: '',
@@ -21,35 +20,21 @@ export default function EventForm() {
     description: '',
     image: ''
   });
-    
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchEventById(parseInt(id)))
-    }
-  }, [id, dispatch]);
 
-  useEffect(() => {
-    if (event) {
-      setFormEvent(formEvent)
-    }
-  }, [event])
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      if (id) { await dispatch(updateEvent(formEvent)).unwrap() }
-      else { await dispatch(createEvent(formEvent)).unwrap() }
+    dispatch(createEvent(event))
+      .unwrap()
+      .then(() => {
+        navigate('/');
+      })
+      .catch((err) => {
+        console.error('Failed to create event:', err);
+      });
+  };
 
-      navigate(`/event/${formEvent.eventId}`)
-    } catch (error: any) {
-      if (error.response?.status === 403) {
-        navigate('/login')
-      }
-      console.log('Submission error: ', error)
-    }
-  }
-
-  if (globalLoading) return <LoadingSpinner/>
+  if (loading) return <LoadingSpinner/>
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -57,25 +42,25 @@ export default function EventForm() {
 
 
   return (
-    <form onSubmit={onSubmit} className="max-w-lg mx-auto bg-white shadow-md rounded-xl p-6">
+    <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white shadow-md rounded-xl p-6">
       <h1 className="text-2xl font-semibold text-gray-800">
         {id ? 'Edit Event' : 'Create Event'}
       </h1>
 
-      <input type="text" name="name" value={formEvent.name} className='event-input'
-       onChange={(e) => setFormEvent({...formEvent, name: e.target.value})}
+      <input type="text" name="name" value={event.name} className='event-input'
+       onChange={(e) => setEvent({...event, name: e.target.value})}
        placeholder="Event Name" required />
 
-      <input type="date" name="date" value={formEvent.date} className='event-input'
-       onChange={(e) => setFormEvent({...formEvent, date: e.target.value})}
+      <input type="date" name="date" value={event.date} className='event-input'
+       onChange={(e) => setEvent({...event, date: e.target.value})}
         required />
 
-      <input type="text" name="location" value={formEvent.location} className='event-input'
-       onChange={(e) => setFormEvent({...formEvent, location: e.target.value})}
+      <input type="text" name="location" value={event.location} className='event-input'
+       onChange={(e) => setEvent({...event, location: e.target.value})}
         placeholder="Location" required />
 
-      <select name="category" value={formEvent.category} className='event-input'
-       onChange={(e) => setFormEvent({...formEvent, category: e.target.value})}
+      <select name="category" value={event.category} className='event-input'
+       onChange={(e) => setEvent({...event, category: e.target.value})}
         required>
           <option value="Meeting">Meeting</option>
           <option value="Seminar">Seminar</option>
@@ -83,12 +68,12 @@ export default function EventForm() {
           <option value="Conference">Conference</option>
       </select>
 
-      <textarea name="description" value={formEvent.description} className='event-input'
-       onChange={(e) => setFormEvent({...formEvent, description: e.target.value})}
+      <textarea name="description" value={event.description} className='event-input'
+       onChange={(e) => setEvent({...event, description: e.target.value})}
         placeholder="Description" required />
 
-      <input type="text" name="image" value={formEvent.image} className='event-input'
-       onChange={(e) => setFormEvent({...formEvent, image: e.target.value})}
+      <input type="text" name="image" value={event.image} className='event-input'
+       onChange={(e) => setEvent({...event, image: e.target.value})}
         placeholder="Image URL" required />
       
       <button type="submit"

@@ -11,29 +11,20 @@ export const AuthService = {
     },
 
 
-    // register: (userData: {email: string; password: string}) =>
-    //     fetch(`${API_URL}/register`, {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify(userData),
-    //         })
-    //         .then(handleResponse)
-    //         .then(data => data as {message: string}),
-
-            
     login: async (credentials: {email: string, password: string}) => {
-        const response = await axios.post(`${API_URL}/api/login`, credentials)
+        const response = await axios.post(`${API_URL}/login`, credentials)
+        console.log(response)
         return response.data;
     },
 
-    logout: async () => {
-        await axios.post(`${API_URL}/api/user/logout`)
-    },
+
+    logout: async () => await axios.post(`${API_URL}/api/user/logout`),
+
     
-    getProfile: async (token: string) => {
+    getProfile: async (accessToken: string) => {
         const response = await axios.get(`${API_URL}/api/user/profile`, {
-            headers: {  Authorization: `Bearer ${token}`    }
+            headers: {  Authorization: `Bearer ${accessToken}`, },
         });
-        return response.data as User
-    },    
+        return response.data as User;
+    },
 }

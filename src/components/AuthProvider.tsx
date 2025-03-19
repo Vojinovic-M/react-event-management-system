@@ -10,7 +10,7 @@ export default function AuthProvider({children} : { children: React.ReactNode}) 
         const token = localStorage.getItem('accessToken')
         if (token) {
             AuthService.getProfile(token)
-            .then(user => dispatch(loginSuccess(user)))
+            .then(user => dispatch(loginSuccess({ user, token })))
             .catch(() => dispatch(logout()))
         }
     }, [dispatch])

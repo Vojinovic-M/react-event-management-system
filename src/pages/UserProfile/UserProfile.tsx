@@ -7,15 +7,14 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 export default function UserProfile() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { user } = useAppSelector((state) => state.auth)
-  const { globalLoading } = useAppSelector((state) => state.app)
+  const { user, loading } = useAppSelector((state) => state.auth)
   
   const handleLogout = () => {
       dispatch(logoutUser());
       navigate('/user/login')
     };
 
-  if (globalLoading) return <LoadingSpinner/>
+  if (loading) return <LoadingSpinner/>
   if (!user) return <div>You are not logged in.</div>;
 
   return (

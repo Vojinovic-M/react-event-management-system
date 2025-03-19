@@ -10,6 +10,7 @@ export default function Unauthorized() {
                 You don't have permission to view this page.
             </p>
             <Link to="/" className="text-blue-600 hover:text-blue-800 transition-colors">
+            Home
             </Link>
 
         </div>
