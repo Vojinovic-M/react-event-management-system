@@ -59,9 +59,12 @@ export const createEvent = createAsyncThunk(
 
 export const deleteEvent = createAsyncThunk(
     'events/deleteEvent',
-    async (id: number, { rejectWithValue }) => {
+    async (id: number, { getState, rejectWithValue }) => {
         try {
-            await axios.delete(`${API_URL}/${id}`);
+            const {auth} = getState() as { auth: { token: string }  }
+            await axios.delete(`${API_URL}/api/admin/delete/${id}`, 
+                {   headers: { Authorization: `Bearer ${auth.token}`    }   }
+            );
             return id;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || "Failed to delete event");
