@@ -3,14 +3,15 @@ import './App.css';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
-import EventDetails from './pages/EventDetails/EventDetails';
-import EventForm from './pages/EventForm/EventForm';
-import EventList from './pages/EventList/EventList';
-import UserLogin from './pages/UserLogin/UserLogin';
-import UserProfile from './pages/UserProfile/UserProfile';
-import UserRegister from './pages/UserRegister/UserRegister';
+import EventDetails from './pages/event/EventDetails';
+import EventList from './pages/event/EventList';
+import UserLogin from './pages/user/UserLogin';
+import UserProfile from './pages/user/UserProfile';
+import UserRegister from './pages/user/UserRegister';
 import ProtectedAdminRoute from './components/ProtectedAdminRoute';
-import Unauthorized from './pages/Unauthorized/Unauthorized';
+import Unauthorized from './pages/user/Unauthorized';
+import EventCreate from './pages/event/EventCreate';
+import EventEdit from './pages/event/EventEdit';
 
 export default function App() {
   return (
@@ -25,9 +26,9 @@ export default function App() {
           <Route path="/user/login" element={< UserLogin />} />
           <Route path="/user/register" element={< UserRegister />} />
           <Route element={<ProtectedAdminRoute/>}>
-            <Route path="/event/create" element={<EventForm/>} />
-            <Route path="/event/delete" element={<EventForm/>} />
-            <Route path="/event/edit/:id" element={<EventForm/>} />
+            <Route path="/event/create" element={<EventCreate/>} />
+            <Route path="/event/delete" element={<EventEdit/>} />
+            <Route path="/event/edit/:id" element={<EventEdit/>} />
           </Route>
           <Route path="/unauthorized" element={<Unauthorized/>}></Route>
         </Routes>

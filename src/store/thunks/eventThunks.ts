@@ -46,7 +46,7 @@ export const createEvent = createAsyncThunk(
     async (event: EventInterface, { getState, rejectWithValue }) => {
         try {
             const { auth } = getState() as { auth: { token: string } }
-            const response = await axios.put<EventInterface>(`${API_URL}/${event.eventId}`, event,
+            const response = await axios.put<EventInterface>(`${API_URL}/api/admin/modify/${event.eventId}`, event,
                 {   headers: { Authorization: `Bearer ${auth.token}` }  }
             );
             return response.data;

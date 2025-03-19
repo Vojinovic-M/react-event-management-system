@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import EventInterface from '../../models/Event';
 import '../../lib/eventform.css';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchEventById, createEvent, updateEvent } from '../../store/thunks/eventThunks';
+import { createEvent } from '../../store/thunks/eventThunks';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 export default function EventForm() {
