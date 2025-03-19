@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { fetchEvents } from '../../store/thunks/eventThunks';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import EventInterface from '../../models/Event';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import LoadingSpinner from '../../components/spinner/LoadingSpinner';
 
 
 export default function EventList() {
@@ -28,7 +28,7 @@ export default function EventList() {
               <p className=" text-gray-600 mb-2">{event.date.toLocaleString()}</p>
               <p className=" text-gray-600 mb-4">{event.location}</p>
               <p className=" text-gray-600 mb-4">{event.category}</p>
-              <p className=" text-gray-600 mb-4">{event.description}</p>
+              <p className=" text-gray-600 mb-4 truncate">{event.description}</p>
               <div className='text-center bottom-0'><a
                 href={`/event/${event.eventId}`}
                 className="w-full px-4 py-2 bg-indigo-600 text-white text-md font-semibold rounded-md hover:bg-indigo-500 transition"

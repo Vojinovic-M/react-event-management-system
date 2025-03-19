@@ -5,13 +5,13 @@ import '../../lib/eventform.css';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteEvent, fetchEventById, updateEvent } from '../../store/thunks/eventThunks';
 import EventForm from '../../components/EventForm';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import LoadingSpinner from '../../components/spinner/LoadingSpinner';
 
 export default function EditEvent() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { loading, error, event } = useAppSelector((state) => state.event);
+  const { loading, error } = useAppSelector((state) => state.event);
   const [localEvent, setLocalEvent] = useState<EventInterface | null>(null);
 
   useEffect(() => {

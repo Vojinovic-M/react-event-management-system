@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logoutUser } from '../../store/thunks/authThunks';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import LoadingSpinner from '../../components/spinner/LoadingSpinner';
 
 
 export default function UserProfile() {

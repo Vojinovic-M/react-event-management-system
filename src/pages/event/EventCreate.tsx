@@ -5,7 +5,7 @@ import '../../lib/eventform.css';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { createEvent } from '../../store/thunks/eventThunks';
 import EventForm from '../../components/EventForm';
-import LoadingSpinner from '../../components/LoadingSpinner';
+import LoadingSpinner from '../../components/spinner/LoadingSpinner';
 
 export default function EventCreate() {
   const navigate = useNavigate();
