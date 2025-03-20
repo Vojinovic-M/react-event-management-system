@@ -3,11 +3,13 @@ import { fetchEvents } from '../../store/thunks/eventThunks';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import EventInterface from '../../models/Event';
 import LoadingSpinner from '../../components/spinner/LoadingSpinner';
+import { Link } from 'react-router-dom';
 
 
 export default function EventList() {
   const dispatch = useAppDispatch()
   const { events, loading, error } = useAppSelector((state) => state.event)
+  const { user } = useAppSelector((state) => state.auth)
 
   useEffect(() => {
     dispatch(fetchEvents())
@@ -25,16 +27,24 @@ export default function EventList() {
             <img src={event.image} alt={event.name} className="w-full h-64 object-cover" />
             <div className="p-6 text-sm relative h-max">
               <h2 className="text-2xl font-bold text-gray-800 mb-2">{event.name}</h2>
-              <p className=" text-gray-600 mb-2">{event.date.toLocaleString()}</p>
+              <p className=" text-gray-600 mb-2">
+                {new Date(event.date).toLocaleDateString('en-GB')} {new Date(event.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
               <p className=" text-gray-600 mb-4">{event.location}</p>
               <p className=" text-gray-600 mb-4">{event.category}</p>
               <p className=" text-gray-600 mb-4 truncate">{event.description}</p>
-              <div className='text-center bottom-0'><a
-                href={`/event/${event.eventId}`}
-                className="w-full px-4 py-2 bg-indigo-600 text-white text-md font-semibold rounded-md hover:bg-indigo-500 transition"
+              <div className='text-center bottom-0'>
+                <Link to={`/event/${event.eventId}`}
+                className="w-full px-4 py-2 bg-indigo-600 text-white text-md font-semibold rounded-md hover:bg-indigo-500 transition mr-2"
               >
                 Visit Event
-              </a></div>
+              </Link>
+              {user?.roles?.includes("Admin") && (
+                <Link to={`/event/edit/${event.eventId}`}
+                className="w-full px-4 py-2 bg-yellow-500 text-white text-md font-semibold rounded-md hover:bg-yellow-400 transition mr-2"
+                >Edit</Link>
+              )}
+              
+              </div>
               
             </div>
           </div>

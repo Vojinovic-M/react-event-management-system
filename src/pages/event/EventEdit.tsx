@@ -54,6 +54,32 @@ export default function EditEvent() {
     }
   };
 
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const date = e.target.value;
+    if (localEvent) {
+      setLocalEvent((prevEvent) => {
+        if (!prevEvent) return null;
+        return {
+          ...prevEvent,
+          date: `${date}T${prevEvent.date.split('T')[1]}`
+        };
+      });
+    }
+  };
+
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const time = e.target.value;
+    if (localEvent) {
+      setLocalEvent((prevEvent) => {
+        if (!prevEvent) return null;
+        return {
+          ...prevEvent,
+          date: `${prevEvent.date.split('T')[0]}T${time}:00`
+        };
+      });
+    }
+  };
+
   const handleDelete = () => {
     if (localEvent) {
         dispatch(deleteEvent(localEvent.eventId))
@@ -71,5 +97,5 @@ export default function EditEvent() {
 
   if (loading || !localEvent) return <LoadingSpinner />;
 
-  return <EventForm event={localEvent} onChange={handleChange} onSubmit={handleSubmit} loading={loading} error={error} onDelete={handleDelete} />;
+  return <EventForm event={localEvent} onChange={handleChange} onDateChange={handleDateChange} onTimeChange={handleTimeChange} onSubmit={handleSubmit} loading={loading} error={error} onDelete={handleDelete} />;
 }

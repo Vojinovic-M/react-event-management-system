@@ -8,7 +8,7 @@ import EventList from './pages/event/EventList';
 import UserLogin from './pages/user/UserLogin';
 import UserProfile from './pages/user/UserProfile';
 import UserRegister from './pages/user/UserRegister';
-import ProtectedAdminRoute from './components/ProtectedAdminRoute';
+import ProtectedAdminRoute from './components/auth/ProtectedAdminRoute';
 import Unauthorized from './pages/user/Unauthorized';
 import EventCreate from './pages/event/EventCreate';
 import EventEdit from './pages/event/EventEdit';

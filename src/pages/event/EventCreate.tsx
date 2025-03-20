@@ -14,7 +14,7 @@ export default function EventCreate() {
   const [event, setEvent] = useState<EventInterface>({
     eventId: 0,
     name: '',
-    date: '',
+    date: new Date().toISOString(),
     location: '',
     category: '',
     description: '',
@@ -28,6 +28,23 @@ export default function EventCreate() {
       [name]: value
     }));
   };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const date = e.target.value;
+    setEvent((prevEvent) => ({
+      ...prevEvent,
+      date: `${date}T${prevEvent.date.split('T')[1]}`
+    }));
+  };
+
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const time = e.target.value;
+    setEvent((prevEvent) => ({
+      ...prevEvent,
+      date: `${prevEvent.date.split('T')[0]}T${time}:00`
+    }));
+  };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,5 +60,5 @@ export default function EventCreate() {
 
   if (loading) return <LoadingSpinner />;
 
-  return <EventForm event={event} onChange={handleChange} onSubmit={handleSubmit} loading={loading} error={error} />;
+  return <EventForm event={event} onChange={handleChange} onDateChange={handleDateChange} onTimeChange={handleTimeChange} onSubmit={handleSubmit} loading={loading} error={error} />;
 }

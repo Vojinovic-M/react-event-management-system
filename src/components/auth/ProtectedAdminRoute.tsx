@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAppSelector } from "../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 
 export default function ProtectedAdminRoute() {
     const location = useLocation();

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useAppDispatch } from "../store/hooks";
-import { AuthService } from "../services/AuthService";
-import { loginSuccess, logout } from "../store/slices/authSlice";
+import { useAppDispatch } from "../../store/hooks";
+import { AuthService } from "../../services/AuthService";
+import { loginSuccess, logout } from "../../store/slices/authSlice";
 
 export default function AuthProvider({children} : { children: React.ReactNode}) {
     const dispatch = useAppDispatch()

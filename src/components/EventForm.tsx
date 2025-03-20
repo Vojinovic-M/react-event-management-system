@@ -3,6 +3,8 @@ import EventInterface from "../models/Event";
 interface EventFormProps {
     event: EventInterface
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void
+    onDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void    
     onSubmit: (e: React.FormEvent) => void
     loading: boolean
     error: string | null
@@ -10,7 +12,7 @@ interface EventFormProps {
 }
 
 
-export default function EventForm({ event, onChange, onSubmit, loading, error, onDelete}: EventFormProps) {
+export default function EventForm({ event, onChange, onDateChange, onTimeChange, onSubmit, loading, error, onDelete}: EventFormProps) {
     return (
         <form onSubmit={onSubmit} className="max-w-lg mx-auto bg-white shadow-md rounded-xl p-6">
           <h1 className="text-2xl font-semibold text-gray-800">
@@ -20,11 +22,22 @@ export default function EventForm({ event, onChange, onSubmit, loading, error, o
           <input type="text" name="name" value={event.name} className='event-input'
             onChange={onChange}
             placeholder="Event Name" required />
-    
-          <input type="date" name="date" value={event.date} className='event-input'
-            onChange={onChange}
-            required />
-    
+
+
+          <div className="flex space-x-4">
+          <input type="date" name="date" value={event.date.split('T')[0]}
+            className='event-input'
+            onChange={onDateChange}
+            required>
+          </input>
+
+          <input type="time" name="time" value={event.date.split('T')[1].substring(0,5)}
+            className="event-input"
+            onChange={onTimeChange}>
+          </input>
+
+          </div>
+
           <input type="text" name="location" value={event.location} className='event-input'
             onChange={onChange}
             placeholder="Location" required />
@@ -32,6 +45,7 @@ export default function EventForm({ event, onChange, onSubmit, loading, error, o
           <select name="category" value={event.category} className='event-input'
            onChange={onChange}
             required>
+              <option value="" disabled>-</option>
               <option value="Meeting">Meeting</option>
               <option value="Seminar">Seminar</option>
               <option value="Workshop">Workshop</option>

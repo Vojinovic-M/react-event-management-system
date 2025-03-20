@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import { store, persistor } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import LoadingSpinner from './components/spinner/LoadingSpinner';
-import AuthProvider from './components/AuthProvider';
+import AuthProvider from './components/auth/AuthProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
