@@ -16,23 +16,25 @@ import EventEdit from './pages/event/EventEdit';
 export default function App() {
   return (
     <Router>
-      <div className='flex flex-col min-h-screen'>
-      <Header/>
-      <main>
-        <Routes>
-          <Route path="/" element={<EventList />} />
-          <Route path="/event/:id" element={< EventDetails />} />
-          <Route path="/user/profile" element={< UserProfile />} />
-          <Route path="/user/login" element={< UserLogin />} />
-          <Route path="/user/register" element={< UserRegister />} />
-          <Route element={<ProtectedAdminRoute/>}>
-            <Route path="/event/create" element={<EventCreate/>} />
-            <Route path="/event/delete" element={<EventEdit/>} />
-            <Route path="/event/edit/:id" element={<EventEdit/>} />
-          </Route>
-          <Route path="/unauthorized" element={<Unauthorized/>}></Route>
-        </Routes>
-      </main>
+      <div className='app-container'>
+        <div className='main-content'>
+          <Header/>
+          <main>
+            <Routes>
+              <Route path="/" element={<EventList />} />
+              <Route path="/event/:id" element={< EventDetails />} />
+              <Route path="/user/profile" element={< UserProfile />} />
+              <Route path="/user/login" element={< UserLogin />} />
+              <Route path="/user/register" element={< UserRegister />} />
+              <Route element={<ProtectedAdminRoute/>}>
+                <Route path="/event/create" element={<EventCreate/>} />
+                <Route path="/event/delete" element={<EventEdit/>} />
+                <Route path="/event/edit/:id" element={<EventEdit/>} />
+              </Route>
+              <Route path="/unauthorized" element={<Unauthorized/>}></Route>
+            </Routes>
+          </main>
+        </div>
       <Footer/>
       </div>
     </Router>

@@ -5,14 +5,17 @@ const API_URL = "https://localhost:7095/api";
 
 export const EventService = {
 
-  getEvents: async (pageNumber: number, pageSize: number): Promise<{
+  getEvents: async (pageNumber: number, pageSize: number, category: string | null, sortBy: 'date' | 'name', sortOrder: 'asc'|'desc'): Promise<{
     items: EventInterface[], pageNumber: number, pageSize: number, totalCount: number, totalPages: number }> => {
     const response = await axios.get<{
       items: EventInterface[], pageNumber: number, pageSize: number, totalCount: number, totalPages: number
     }>(`${API_URL}/events`, {
       params: {
         pageNumber,
-        pageSize
+        pageSize,
+        category,
+        sortBy,
+        sortOrder
       }
     });
     return response.data;

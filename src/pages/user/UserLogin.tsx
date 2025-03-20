@@ -26,7 +26,7 @@ export default function UserLogin() {
   };
 
   return (
-    <div className="wrapper">
+    <div className="wrapper border-color-sky border-1">
         <div className="header-wrapper">
           <h2>Sign in to your account</h2>
         </div>

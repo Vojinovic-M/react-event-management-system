@@ -74,6 +74,7 @@
     flex-direction: column; /* flex-col */
     padding: 3rem 1.5rem; /* px-6 py-12 */
     border-radius: 0.5rem; /* rounded-lg */
+    border: 1px solid #c7cdda; /* border-gray-300 */
     margin-bottom: 4rem; /* mb-16 */
 }
 

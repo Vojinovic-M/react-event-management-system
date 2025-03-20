@@ -11,6 +11,9 @@ interface EventState {
     pageSize: number
     totalCount: number
     totalPages: number
+    category: string | null
+    sortBy: 'date' | 'name'
+    sortOrder: 'asc' | 'desc'
 }
 
 const initialState: EventState = {
@@ -22,12 +25,35 @@ const initialState: EventState = {
     pageSize: 10,
     totalCount: 0,
     totalPages: 0,
+    category: null,
+    sortBy: 'date',
+    sortOrder: 'asc'
 }
 
 const eventSlice = createSlice({
     name: 'event',
     initialState,
-    reducers: {},
+    reducers: {
+        updateEventFilters: (state, action: PayloadAction<{ category: string; pageNumber: number }>) => {
+            state.category = action.payload.category;
+            state.pageNumber = action.payload.pageNumber;
+        },
+        updateEventSort: (state, action: PayloadAction<{ sortBy: 'date' | 'name'; pageNumber: number }>) => {
+            state.sortBy = action.payload.sortBy;
+            state.pageNumber = action.payload.pageNumber;
+        },
+        updateEventSortOrder: (state, action: PayloadAction<{ sortOrder: 'asc' | 'desc'; pageNumber: number }>) => {
+            state.sortOrder = action.payload.sortOrder;
+            state.pageNumber = action.payload.pageNumber;
+        },
+        updatePageNumber: (state, action: PayloadAction<number>) => {
+            state.pageNumber = action.payload;
+        },
+        updatePageSize: (state, action: PayloadAction<number>) => {
+            state.pageSize = action.payload;
+            state.pageNumber = 1;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchEvents.pending, (state) => {
@@ -114,5 +140,5 @@ const eventSlice = createSlice({
               });
     }
 })
-
+export const { updateEventFilters, updateEventSort, updateEventSortOrder, updatePageNumber, updatePageSize } = eventSlice.actions;
 export default eventSlice.reducer

@@ -7,10 +7,11 @@ const API_URL = "https://localhost:7095"
 
 export const fetchEvents = createAsyncThunk(
     'event/fetchEvents',
-    async ({pageNumber, pageSize} : {pageNumber: number; pageSize: number},
+    async ({pageNumber, pageSize, category, sortBy, sortOrder} 
+        : {pageNumber: number; pageSize: number, category: string | null; sortBy: 'date' | 'name'; sortOrder: 'asc' | 'desc'},
          {rejectWithValue }) => {
         try {
-            const response = await EventService.getEvents(pageNumber,pageSize)
+            const response = await EventService.getEvents(pageNumber,pageSize, category, sortBy, sortOrder)
             // const response = await axios.get<EventInterface[]>(`${API_URL}/api/events`)
             return response
         } catch (error: any) {
