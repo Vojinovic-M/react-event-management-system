@@ -1,87 +1,84 @@
 import React, { useState } from 'react';
+import '../../lib/form.css';
+import '../../lib/text.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../store/hooks';
+import { loginUser } from '../../store/thunks/authThunks';
 
 export default function UserLogin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
-  const handleSubmit = () => {
-    console.log('email:', email);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('')
+
+    dispatch(loginUser({ email, password}))
+      .unwrap()
+      .then(() => navigate('/user/profile'))
+      .catch((error) => {
+        console.error('Login failed: ', error)
+        setError(error.message || 'Login failed, please try again.')
+      })
   };
 
   return (
-    <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
-      <div className="flex min-h-full mx-auto w-1/2 bg-white rounded-lg flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-700">Sign in to your account</h2>
+    <div className="wrapper">
+        <div className="header-wrapper">
+          <h2>Sign in to your account</h2>
         </div>
+        {error && <span style={{color: "red"}}>{error}</span>}
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+        <div className="form-wrapper">
+          <form action="#" method="POST" className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                Email address
-              </label>
+              <label htmlFor="email" className="custom-label">Email address</label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
                   type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
-                  autoComplete="email"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 border outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="custom-input"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                    Forgot password?
-                  </a>
-                </div>
+                <label htmlFor="password" className="custom-label">Password</label>
+                {/* <div className="text-sm"><a href="#" className="custom-bottom-text">Forgot password?</a></div> */}
               </div>
               <div className="mt-2">
                 <input
-                  id="password"
-                  name="password"
                   type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 border outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="custom-input"
                 />
               </div>
             </div>
 
             <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
+              <button type="submit" className="custom-button">
                 Sign in
               </button>
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm/6 text-gray-500">
+          <span className="grey-bottom-text">
             Don't have an account?{' '}
-            <a href="/user/register" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            <Link to="/user/register" className="custom-bottom-text">
               Register here
-            </a>
-          </p>
+            </Link>
+          </span>
         </div>
-      </div>
-    </>
+    </div>
   )
 }

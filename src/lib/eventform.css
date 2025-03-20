@@ -1,0 +1,7 @@
+.event-input {
+    width: 100%;
+    margin-top: 16px;
+    padding: 8px;
+    border: 1px solid rgb(95, 95, 95);
+    border-radius: 0.5em;
+}

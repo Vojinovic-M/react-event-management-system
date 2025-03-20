@@ -1,51 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { Event } from './EventList';
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import '../../lib/eventdetailsimage.css';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchEventById } from '../../store/thunks/eventThunks';
+import LoadingSpinner from '../../components/spinner/LoadingSpinner';
 
 export default function EventDetails() {
   const { id } = useParams();
-  const [event, setEvent] = useState<Event | null>(null);
+  const dispatch = useAppDispatch()
+  const { event, loading, error } = useAppSelector((state) => state.event)
+  const { user } = useAppSelector((state) => state.auth)
 
-  useEffect(() => {
-    axios
-      .get(`/api/events/${id}`)
-      .then((response) => setEvent(response.data))
-      .catch((error) => console.error('Error fetching event details:', error));
-  }, [id]);
+    useEffect(() => {
+      if (id) {
+        dispatch(fetchEventById(parseInt(id)))
+      }
+    }, [id, dispatch]);
 
-  if (!event)
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <p className="text-lg text-gray-500">Loading event details...</p>
-      </div>
-    );
+  if (loading) return <LoadingSpinner/>
+    if (error) return <div>Error: {error}</div>
+    if (!event) return <div>Event not found.</div>
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl w-full bg-white rounded-lg shadow-md overflow-hidden">
-        <img
-          src={event.imageUrl}
-          alt={event.name}
-          className="w-full h-64 object-cover"
-        />
-        <div className="p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            {event.name}
-          </h1>
-          <div className="text-gray-600 mb-4">
+    <div className="flex min-h-screen items-center justify-center px-6 py-12">
+      <div className="max-w-3xl w-full bg-white rounded-xl shadow-lg overflow-hidden">
+      {user?.roles?.includes("Admin") && (
+            <div className='mt-2 text-right'>
+              <Link to={`/event/edit/${event.eventId}`}
+              className="w-full px-4 py-2 bg-yellow-500 text-white text-xl font-semibold rounded-md hover:bg-yellow-400 transition"
+              >Edit</Link>
+            </div>
+          )}
+        {/* Image Container */}
+        <div className="flex justify-center p-6">
+          <div className='border'>
+              <img
+                src={event.image}
+                alt={event.name}
+              />
+            </div>
+        </div>
+
+        {/* Event Details */}
+        <div className="px-8 pb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">{event.name}</h1>
+          <div className="text-gray-600 space-y-2 font-medium">
             <p>
-              <span className="font-medium">Date:</span>{' '}
-              {new Date(event.date).toLocaleDateString()}
-            </p>
-            <p>
-              <span className="font-medium">Location:</span> {event.location}
-            </p>
-            <p>
-              <span className="font-medium">Category:</span> {event.category}
-            </p>
+              <span className="font-semibold">Date:</span>{" "}
+              {new Date(event.date).toLocaleDateString('en-GB')} {new Date(event.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+              </p>
+            <p><span className="font-semibold">Location:</span> {event.location}</p>
+            <p><span className="font-semibold">Category:</span> {event.category}</p>
           </div>
-          <p className="text-gray-700 leading-relaxed">{event.description}</p>
+          <p className="text-gray-700 leading-relaxed mt-4">{event.description}</p>
         </div>
       </div>
     </div>
