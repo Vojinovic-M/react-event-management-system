@@ -7,13 +7,21 @@ interface EventState {
     event: EventInterface | null
     loading: boolean
     error: string | null
+    pageNumber: number
+    pageSize: number
+    totalCount: number
+    totalPages: number
 }
 
 const initialState: EventState = {
     events: [],
     event: null,
     loading: false,
-    error: null
+    error: null,
+    pageNumber: 1,
+    pageSize: 10,
+    totalCount: 0,
+    totalPages: 0,
 }
 
 const eventSlice = createSlice({
@@ -26,8 +34,14 @@ const eventSlice = createSlice({
                 state.loading = true
                 state.error = null
             })
-            .addCase(fetchEvents.fulfilled, (state, action: PayloadAction<EventInterface[]>) => {
-                state.events = action.payload
+            .addCase(fetchEvents.fulfilled, (state, action: PayloadAction<{
+                items: EventInterface[]; pageNumber: number; pageSize: number; totalCount: number; totalPages: number;
+            }>) => {
+                state.events = action.payload.items
+                state.pageNumber = action.payload.pageNumber
+                state.pageSize = action.payload.pageSize
+                state.totalCount = action.payload.totalCount
+                state.totalPages = action.payload.totalPages
                 state.loading = false
                 state.error = null
             })

@@ -8,13 +8,31 @@ import { Link } from 'react-router-dom';
 
 export default function EventList() {
   const dispatch = useAppDispatch()
-  const { events, loading, error } = useAppSelector((state) => state.event)
+  const { events, loading, error, pageNumber, pageSize, totalPages } = useAppSelector((state) => state.event)
   const { user } = useAppSelector((state) => state.auth)
 
   useEffect(() => {
-    dispatch(fetchEvents())
-  }, [dispatch])
+    dispatch(fetchEvents({pageNumber, pageSize}))
+  }, [dispatch, pageNumber, pageSize])
   
+  const handlePageChange = (newPageNumber: number) => {
+    dispatch(fetchEvents({ pageNumber: newPageNumber, pageSize }))
+  }
+
+  const renderPageNumbers = () => {
+    const pageNumbers = []
+    for (let i = 1; i<=totalPages; i++) {
+      pageNumbers.push(
+        <button key={i}
+        onClick={() => handlePageChange(i)}
+        className={`px-4 py-2 rounded-md mr-2 ${i === pageNumber ? 'bg-blue-500 text-white hover:bg-blue-400' : 'bg-black text-gray-100 hover:bg-gray-700'}`}
+        >{i}
+        </button>
+      )
+    }
+    return pageNumbers
+  }
+
   if (loading) return <LoadingSpinner/>
   if (error) return <div>Error: {error}</div>
 
@@ -49,6 +67,23 @@ export default function EventList() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={() => handlePageChange(pageNumber - 1)}
+          disabled={pageNumber === 1}
+          className="px-4 py-2 bg-black text-gray-100 rounded-md hover:bg-gray-700 mr-2"
+        >
+          Previous
+        </button>
+        {renderPageNumbers()}
+        <button
+          onClick={() => handlePageChange(pageNumber + 1)}
+          disabled={pageNumber === totalPages}
+          className="px-4 py-2 bg-black text-gray-100 rounded-md hover:bg-gray-700"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
