@@ -1,7 +1,6 @@
-import '../lib/navbar.css';
-import AdminNavbar from "./navbar/AdminNavbar";
-import UserNavbar from "./navbar/UserNavbar";
-import GuestNavbar from "./navbar/GuestNavbar";
+import AdminNavbar from "../lib/navbar/AdminNavbar";
+import UserNavbar from "../lib/navbar/UserNavbar";
+import GuestNavbar from "../lib/navbar/GuestNavbar";
 import { logoutUser } from "../store/thunks/authThunks";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useNavigate } from 'react-router-dom';

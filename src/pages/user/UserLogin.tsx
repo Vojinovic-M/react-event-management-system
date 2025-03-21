@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import '../../lib/form.css';
-import '../../lib/text.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hooks';
 import { loginUser } from '../../store/thunks/authThunks';
+import Button from '../../lib/form/Button';
+import Label from '../../lib/form/Label';
+import Input from '../../lib/form/Input';
 
 export default function UserLogin() {
   const dispatch = useAppDispatch();
@@ -26,59 +27,40 @@ export default function UserLogin() {
   };
 
   return (
-    <div className="wrapper border-color-sky border-1">
-        <div className="header-wrapper">
-          <h2>Sign in to your account</h2>
+    <div className="flex flex-col mx-auto w-full max-w-xl bg-white p-12 rounded-lg shadow-md">
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-700">Sign in to your account</h2>
         </div>
-        {error && <span style={{color: "red"}}>{error}</span>}
+        {error && <span className='text-red-600'>{error}</span>}
 
-        <div className="form-wrapper">
-          <form action="#" method="POST" className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="email" className="custom-label">Email address</label>
-              <div className="mt-2">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="custom-input"
-                />
-              </div>
-            </div>
+        <div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <Label htmlFor="email">Email address</Label>
+            <Input name="email" type="email" value={email}
+              onChange={(e) => setEmail(e.target.value)} required
+            />
+          </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="custom-label">Password</label>
-                {/* <div className="text-sm"><a href="#" className="custom-bottom-text">Forgot password?</a></div> */}
-              </div>
-              <div className="mt-2">
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="custom-input"
-                />
-              </div>
-            </div>
+          <div>
+            <Label htmlFor="password">Password</Label>
+            <Input name="password" type="password" value={password}
+              onChange={(e) => setPassword(e.target.value)} required
+            />
+          </div>
 
-            <div>
-              <button type="submit" className="custom-button">
-                Sign in
-              </button>
-            </div>
-          </form>
+          <Button type="submit" className="bg-indigo-600 text-white hover:bg-indigo-500">
+            Sign in
+          </Button>
+        </form>
 
-          <span className="grey-bottom-text">
-            Don't have an account?{' '}
-            <Link to="/user/register" className="custom-bottom-text">
-              Register here
-            </Link>
-          </span>
-        </div>
+        <span className="text-center text-gray-600">
+          Don't have an account?{' '}
+          <Link to="/user/register" className="text-indigo-600 hover:text-indigo-500">
+            Register here
+          </Link>
+        </span>
+      </div>
     </div>
   )
 }

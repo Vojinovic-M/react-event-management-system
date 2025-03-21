@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import EventInterface from '../../models/Event';
-import '../../lib/eventform.css';
+import Event from '../../models/Event';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { createEvent } from '../../store/thunks/eventThunks';
 import EventForm from '../../components/EventForm';
-import LoadingSpinner from '../../components/spinner/LoadingSpinner';
+import LoadingSpinner from '../../lib/LoadingSpinner';
 
 export default function EventCreate() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.event);
-  const [event, setEvent] = useState<EventInterface>({
+  const [event, setEvent] = useState<Event>({
     eventId: 0,
     name: '',
     date: new Date().toISOString(),

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import '../../lib/form.css';
-import '../../lib/text.css';
 import { AuthService } from '../../services/AuthService';
 import { Link } from 'react-router-dom';
+import Label from '../../lib/form/Label';
+import Input from '../../lib/form/Input';
+import Button from '../../lib/form/Button';
 
 export default function UserRegister() {
     const [userData, setUserData] = useState({
@@ -29,62 +30,41 @@ export default function UserRegister() {
       }
     }
       return (
-        <div className="wrapper">
-          <div className="header-wrapper">
-            <h2>Create a new account</h2>
+        <div className="flex flex-col mx-auto w-full max-w-xl bg-white p-12 rounded-lg shadow-md">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-700">Create a new account</h2>
           </div>
 
-          <div className="form-wrapper">
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {success && <p style={{ color: "green" }}>{success}</p>}
-            <form onSubmit={handleSubmit} className="space-y-6">
-
-              {/* Email */}
-              <div>
-                <label htmlFor="email" className="custom-label">
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    name="email"
-                    type="email"
-                    value={userData.email}
-                    onChange={handleChange}
-                    required
-                    className="custom-input"
-                  />
-                </div>
-              </div>
-
-              {/* Password */}
-              <div>
-                <label htmlFor="password" className="custom-label">
-                  Password
-                </label>
-                <div className="mt-2">
-                  <input
-                    name="password"
-                    type="password"
-                    value={userData.password}
-                    onChange={handleChange}
-                    required
-                    className="custom-input"
-                  />
-                </div>
-              </div>
-
-                <button type="submit" className="custom-button">
-                  Register
-                </button>
-            </form>
-
-            <span className="grey-bottom-text">
-              Already have an account?{' '}
-              <Link to="/user/login" className="custom-bottom-text">
-                Login here
-              </Link>
-            </span>
+          <div>
+        {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="text-green-500">{success}</p>}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <Label htmlFor="email">Email address</Label>
+            <Input name="email" type="email" value={userData.email}
+              onChange={handleChange} required
+            />
           </div>
+
+          <div>
+            <Label htmlFor="password">Password</Label>
+            <Input name="password" type="password" value={userData.password}
+              onChange={handleChange} required
+            />
+          </div>
+
+          <Button type="submit" className="bg-indigo-600 text-white hover:bg-indigo-500">
+            Register
+          </Button>
+        </form>
+
+        <span className="text-center text-gray-600">
+          Already have an account?{' '}
+          <Link to="/user/login" className="text-indigo-600 hover:text-indigo-500">
+            Login here
+          </Link>
+        </span>
+      </div>
         </div>
       );
     } 

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { fetchEvents } from '../../store/thunks/eventThunks';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import EventInterface from '../../models/Event';
-import LoadingSpinner from '../../components/spinner/LoadingSpinner';
+import LoadingSpinner from '../../lib/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import { updateEventFilters, updateEventSort, updateEventSortOrder, updatePageNumber } from '../../store/slices/eventSlice';
 
@@ -84,7 +84,7 @@ export default function EventList() {
     <div className="max-w-screen-xl mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8 text-center">Upcoming Events</h1>
 
-      <div className="flex flex-wrap gap-4 mb-8"> {/* justify-center text-center */}
+      <div className="flex flex-wrap gap-4 mb-8 justify-end text-right">
         {/* Filter za kategorije */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700 mb-1">Category:</label>

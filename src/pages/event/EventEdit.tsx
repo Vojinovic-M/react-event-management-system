@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import EventInterface from '../../models/Event';
-import '../../lib/eventform.css';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteEvent, fetchEventById, updateEvent } from '../../store/thunks/eventThunks';
 import EventForm from '../../components/EventForm';
-import LoadingSpinner from '../../components/spinner/LoadingSpinner';
+import LoadingSpinner from '../../lib/LoadingSpinner';
 
 export default function EditEvent() {
   const { id } = useParams<{ id: string }>();

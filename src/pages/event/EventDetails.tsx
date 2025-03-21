@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import '../../lib/eventdetailsimage.css';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchEventById } from '../../store/thunks/eventThunks';
-import LoadingSpinner from '../../components/spinner/LoadingSpinner';
+import LoadingSpinner from '../../lib/LoadingSpinner';
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -23,7 +22,7 @@ export default function EventDetails() {
 
   return (
     <div className="flex min-h-screen items-center justify-center px-6 py-12">
-      <div className="max-w-3xl w-full bg-white rounded-xl shadow-lg overflow-hidden">
+      <div className="max-w-2xl w-full bg-white rounded-xl border border-blue-300 overflow-hidden">
       {user?.roles?.includes("Admin") && (
             <div className='mt-2 text-right'>
               <Link to={`/event/edit/${event.eventId}`}
@@ -37,6 +36,7 @@ export default function EventDetails() {
               <img
                 src={event.image}
                 alt={event.name}
+                className="w-[600px] h-[600px] object-contain"
               />
             </div>
         </div>
